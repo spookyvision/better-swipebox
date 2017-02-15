@@ -162,6 +162,9 @@
 				this.openMedia( index );
 				this.preloadMedia( index+1 );
 				this.preloadMedia( index-1 );
+
+				history.pushState( { swipebox: true }, "" );
+
 				if ( plugin.settings.afterOpen ) {
 					plugin.settings.afterOpen(index);
 				}
@@ -710,6 +713,10 @@
 				$( '#swipebox-overlay' ).click( function() {
 					$this.closeSlide();
 				} );
+
+				$( window ).on( 'popstate.betterSwipebox', function() {
+					$this.closeSlide();
+				} );
 			},
 
 			/**
@@ -1035,6 +1042,11 @@
 				$( 'html' ).removeClass( 'swipebox-html' );
 				$( 'html' ).removeClass( 'swipebox-touch' );
 				$( window ).trigger( 'resize' );
+
+				$( window ).off( 'popstate.betterSwipebox' );
+				if ( history.state && history.state.swipebox )
+					history.back();
+
 				this.destroy();
 			},
 
