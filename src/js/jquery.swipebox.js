@@ -694,9 +694,20 @@
 						$this.getNext();
 						$this.setTimeout();
 					} );
+
+					$( '#swipebox-slider' ).on( 'click', '.current img', function( event ) {
+						event.preventDefault();
+						event.stopPropagation();
+						$this.getNext();
+						$this.setTimeout();
+					} );
 				}
 
 				$( '#swipebox-close' ).bind( action, function() {
+					$this.closeSlide();
+				} );
+
+				$( '#swipebox-overlay' ).click( function() {
 					$this.closeSlide();
 				} );
 			},
