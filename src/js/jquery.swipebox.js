@@ -163,7 +163,7 @@
 				this.preloadMedia( index+1 );
 				this.preloadMedia( index-1 );
 
-				history.pushState( { swipebox: true }, "" );
+				history.pushState( { swipebox: true }, '' );
 
 				if ( plugin.settings.afterOpen ) {
 					plugin.settings.afterOpen(index);
@@ -322,7 +322,7 @@
 						pinchData.inProgress = true;
 						pinchData.startZoom = pinchData.lastZoom;
 						pinchData.startDistance = Math.sqrt(Math.pow(event.originalEvent.targetTouches[0].pageX-event.originalEvent.targetTouches[1].pageX,2) + Math.pow(event.originalEvent.targetTouches[0].pageY-event.originalEvent.targetTouches[1].pageY,2));
-						if (pinchData.lastZoom == 100) {
+						if (pinchData.lastZoom === 100) {
 							pinchData.marginTop = 0;
 							pinchData.marginLeft = 0;
 							pinchData.diffHeight = 0;
@@ -358,9 +358,9 @@
 							var nowDiffWidth = pinchData.diffWidth;
 							pinchData.lastZoom = perc;
 							
-							$("#swipebox-slider .current img").css({"max-width":perc+"%", "max-height":perc+"%"});
-							pinchData.diffHeight = Math.max(0, $("#swipebox-slider .current img").height() - $("#swipebox-slider .current").height());
-							pinchData.diffWidth = Math.max(0, $("#swipebox-slider .current img").width() - $("#swipebox-slider .current").width());
+							$('#swipebox-slider .current img').css({'max-width':perc+'%', 'max-height':perc+'%'});
+							pinchData.diffHeight = Math.max(0, $('#swipebox-slider .current img').height() - $('#swipebox-slider .current').height());
+							pinchData.diffWidth = Math.max(0, $('#swipebox-slider .current img').width() - $('#swipebox-slider .current').width());
 							
 							pinchData.overZoom = false;
 							if (pinchData.diffHeight > 0) {
@@ -379,8 +379,8 @@
 							} else {
 								pinchData.marginLeft = 0;
 							}
-							$("#swipebox-slider .current img").css({"margin-top":pinchData.marginTop+'px', "margin-left":pinchData.marginLeft+'px'});
-							if (nowDiffHeight == pinchData.diffHeight && nowDiffWidth == pinchData.diffWidth) {
+							$('#swipebox-slider .current img').css({'margin-top':pinchData.marginTop+'px', 'margin-left':pinchData.marginLeft+'px'});
+							if (nowDiffHeight === pinchData.diffHeight && nowDiffWidth === pinchData.diffWidth) {
 								pinchData.lastZoom = nowZoom;
 								pinchData.diffHeight = nowDiffHeight;
 								pinchData.diffWidth = nowDiffWidth;
@@ -398,7 +398,7 @@
 							pinchData.lastMarginLeft = Math.min(0, pinchData.lastMarginLeft);
 							pinchData.lastMarginLeft = Math.max(-pinchData.diffWidth, pinchData.lastMarginLeft);
 							
-							$("#swipebox-slider .current img").css({"margin-top":pinchData.lastMarginTop+'px', "margin-left":pinchData.lastMarginLeft+'px'});
+							$('#swipebox-slider .current img').css({'margin-top':pinchData.lastMarginTop+'px', 'margin-left':pinchData.lastMarginLeft+'px'});
 							
 							return;
 						}
@@ -516,7 +516,7 @@
 							// C.C. begin
 							if (pinchData.lastZoom > 100) {
 								// let's reset css props before swiping
-								$("#swipebox-slider .current img").css({"max-width":"100%", "max-height":"100%", "margin-top":'',"margin-left":''});
+								$('#swipebox-slider .current img').css({'max-width':'100%', 'max-height':'100%', 'margin-top':'','margin-left':''});
 								pinchData.lastZoom = 100;
 							}
 							// C.C. end
@@ -528,7 +528,7 @@
 							// C.C. begin
 							if (pinchData.lastZoom > 100) {
 								// let's reset css props before swiping
-								$("#swipebox-slider .current img").css({"max-width":"100%", "max-height":"100%", "margin-top":'',"margin-left":''});
+								$('#swipebox-slider .current img').css({'max-width':'100%', 'max-height':'100%', 'margin-top':'','margin-left':''});
 								pinchData.lastZoom = 100;
 							}
 							// C.C. end
@@ -1044,8 +1044,9 @@
 				$( window ).trigger( 'resize' );
 
 				$( window ).off( 'popstate.betterSwipebox' );
-				if ( history.state && history.state.swipebox )
+				if ( history.state && history.state.swipebox ) {
 					history.back();
+				}
 
 				this.destroy();
 			},
