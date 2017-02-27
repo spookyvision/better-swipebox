@@ -156,6 +156,9 @@
 				if ( plugin.settings.beforeOpen ) {
 					plugin.settings.beforeOpen();
 				}
+
+				history.pushState( { swipebox: true }, '' );
+
 				this.target.trigger( 'swipebox-start' );
 				$.swipebox.isOpen = true;
 				this.build();
@@ -163,8 +166,6 @@
 				this.openMedia( index );
 				this.preloadMedia( index+1 );
 				this.preloadMedia( index-1 );
-
-				history.pushState( { swipebox: true }, '' );
 
 				if ( plugin.settings.afterOpen ) {
 					plugin.settings.afterOpen(index);
