@@ -1,15 +1,15 @@
-Swipebox
+Better Swipebox
 ================================
 
 A touchable jQuery lightbox.
 
-[View project page](http://brutaldesign.github.com/swipebox)
+[View project page](https://marian-kadanka.github.io/better-swipebox/)
 
-##What is Swipebox ?
+##What is Better Swipebox?
 
-Swipebox is a jQuery "lightbox" plugin for desktop, mobile and tablet.
+Better Swipebox is a fork of famous jQuery "lightbox" plugin [Swipebox](https://github.com/brutaldesign/swipebox) for desktop, mobile and tablet.
 
-##Features
+##Original Swipebox Features
 
 - Swipe gestures for mobile
 - Keyboard Navigation for desktop
@@ -17,6 +17,12 @@ Swipebox is a jQuery "lightbox" plugin for desktop, mobile and tablet.
 - Retina support for UI icons
 - Easy CSS customization
 - Video, Images and Inline content
+
+##Better Swipebox Additions
+
+- Pinch zoom on mobile
+- Back button closes Swipebox
+- Clicking on the background closes Swipebox, clicking on the image loads next one
 
 ###Compatibility
 
@@ -77,11 +83,3 @@ queryStringData: {} // plain object with custom query string arguments to pass/o
 toggleClassOnLoad: '' // CSS class that can be toggled when the slide will be loaded (like 'hidden' of Bootstrap)
 useSVG: true
 ```
-
-###Pull Requests
-
-I want to keep this plugin as simple as possible. I won't merge pull requests for additional features such as download buttons, social like buttons, IE8 compatibility etc... But feel free to fork the project and customize it to suit to your needs. Most wanted PR are for bug fixes. Also, a future improvement will be to allow zoom on touchable devices.
-
-If you want to submit a pull request please be sure to grunt the whole thing (mostly jshintrc validation and minified file) and send me a demo URL. Also, please comment your code.
-
-Thanks for your understanding and thank you all for your helpful support!
