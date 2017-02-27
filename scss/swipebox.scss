@@ -288,7 +288,7 @@ html.swipebox-html.swipebox-touch {
 /* Skin 
 --------------------------*/
 #swipebox-overlay {
-	background: #0d0d0d;
+	background: rgba(0,0,0,0.9);
 }
 
 #swipebox-bottom-bar,
@@ -301,6 +301,12 @@ html.swipebox-html.swipebox-touch {
 
 #swipebox-bottom-bar {
 	//border-top: 1px solid rgba(255, 255, 255, 0.1);
+	position: static;
+	height: 0;
+
+	&.visible-bars {
+		transform: none;
+	}
 }
 
 #swipebox-top-bar {
@@ -309,4 +315,19 @@ html.swipebox-html.swipebox-touch {
 	font-size: 15px;
 	line-height: 43px;
 	font-family: Helvetica, Arial, sans-serif;
+}
+
+#swipebox-next, #swipebox-prev {
+	position: absolute;
+	top: 45%;
+	background-color: rgba(0,0,0,0.7);
+	border-radius: 25px;
+}
+
+#swipebox-prev {
+	left: 4%;
+}
+
+#swipebox-next {
+	right: 4%;
 }

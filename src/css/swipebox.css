@@ -272,7 +272,7 @@ html.swipebox-html.swipebox-touch {
 /* Skin 
 --------------------------*/
 #swipebox-overlay {
-  background: #0d0d0d;
+  background: rgba(0, 0, 0, 0.9);
 }
 
 #swipebox-bottom-bar,
@@ -282,9 +282,34 @@ html.swipebox-html.swipebox-touch {
   opacity: 0.95;
 }
 
+#swipebox-bottom-bar {
+  position: static;
+  height: 0;
+}
+#swipebox-bottom-bar.visible-bars {
+  -webkit-transform: none;
+      -ms-transform: none;
+          transform: none;
+}
+
 #swipebox-top-bar {
   color: white !important;
   font-size: 15px;
   line-height: 43px;
   font-family: Helvetica, Arial, sans-serif;
+}
+
+#swipebox-next, #swipebox-prev {
+  position: absolute;
+  top: 45%;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 25px;
+}
+
+#swipebox-prev {
+  left: 4%;
+}
+
+#swipebox-next {
+  right: 4%;
 }
