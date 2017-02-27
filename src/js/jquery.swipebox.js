@@ -1,6 +1,7 @@
 /*! Swipebox v1.4.4 | Constantin Saguin csag.co | MIT License | github.com/brutaldesign/swipebox */
 /*
  * Pinch-zoom added by Claudio Castelpietra - www.itala.net - 21/09/2015
+ * Modified by Marian Kadanka - 2017/02/27
  * Code identified by:
  * C.C. begin
  * ...
@@ -300,7 +301,7 @@
 					startCoords = {},
 					endCoords = {},
 					// C.C. begin
-					pinchData = {inProgress:false,lastZoom:100,overZoom:false},
+					pinchData = {inProgress:false,lastZoom:1,overZoom:false},
 					// C.C. end
 					bars = $( '#swipebox-top-bar, #swipebox-bottom-bar' ),
 					slider = $( '#swipebox-slider' );
@@ -322,9 +323,9 @@
 						pinchData.inProgress = true;
 						pinchData.startZoom = pinchData.lastZoom;
 						pinchData.startDistance = Math.sqrt(Math.pow(event.originalEvent.targetTouches[0].pageX-event.originalEvent.targetTouches[1].pageX,2) + Math.pow(event.originalEvent.targetTouches[0].pageY-event.originalEvent.targetTouches[1].pageY,2));
-						if (pinchData.lastZoom === 100) {
-							pinchData.marginTop = 0;
-							pinchData.marginLeft = 0;
+						if (pinchData.lastZoom === 1) {
+							pinchData.centerTop = 0;
+							pinchData.centerLeft = 0;
 							pinchData.diffHeight = 0;
 							pinchData.diffWidth = 0;
 						}
@@ -351,35 +352,33 @@
 						// C.C. begin
 						if (pinchData.inProgress) {
 							var lastDistance = Math.sqrt(Math.pow(event.originalEvent.targetTouches[0].pageX-event.originalEvent.targetTouches[1].pageX,2) + Math.pow(event.originalEvent.targetTouches[0].pageY-event.originalEvent.targetTouches[1].pageY,2));
-							var perc = pinchData.startZoom * (1+(lastDistance-pinchData.startDistance)/pinchData.startDistance);
-							perc = Math.max(100, perc);
+							var scale = pinchData.startZoom * (1+(lastDistance-pinchData.startDistance)/pinchData.startDistance);
+							scale = Math.max(1, scale);
 							var nowZoom = pinchData.lastZoom;
 							var nowDiffHeight = pinchData.diffHeight;
 							var nowDiffWidth = pinchData.diffWidth;
-							pinchData.lastZoom = perc;
+							pinchData.lastZoom = scale;
 							
-							$('#swipebox-slider .current img').css({'max-width':perc+'%', 'max-height':perc+'%'});
-							pinchData.diffHeight = Math.max(0, $('#swipebox-slider .current img').height() - $('#swipebox-slider .current').height());
-							pinchData.diffWidth = Math.max(0, $('#swipebox-slider .current img').width() - $('#swipebox-slider .current').width());
+							$('#swipebox-slider .current img').css({'transform':'scale('+scale+')', '-webkit-transform':'scale('+scale+')'});
+							pinchData.diffHeight = Math.max(0, $('#swipebox-slider .current img').height()*scale - $('#swipebox-slider .current').height());
+							pinchData.diffWidth = Math.max(0, $('#swipebox-slider .current img').width()*scale - $('#swipebox-slider .current').width());
 							
 							pinchData.overZoom = false;
 							if (pinchData.diffHeight > 0) {
-								pinchData.marginTop += -(pinchData.diffHeight-nowDiffHeight)/2;
-								pinchData.marginTop = Math.min(0, pinchData.marginTop);
-								pinchData.marginTop = Math.max(-pinchData.diffHeight, pinchData.marginTop);
+								pinchData.centerTop *= (scale/nowZoom);
+								pinchData.centerTop = Math.max(-pinchData.diffHeight/2, Math.min(pinchData.diffHeight/2, pinchData.centerTop));
 								pinchData.overZoom = true;
 							} else {
-								pinchData.marginTop = 0;
+								pinchData.centerTop = 0;
 							}
 							if (pinchData.diffWidth > 0) {
-								pinchData.marginLeft += -(pinchData.diffWidth-nowDiffWidth)/2;
-								pinchData.marginLeft = Math.min(0, pinchData.marginLeft);
-								pinchData.marginLeft = Math.max(-pinchData.diffWidth, pinchData.marginLeft);
+								pinchData.centerLeft *= (scale/nowZoom);
+								pinchData.centerLeft = Math.max(-pinchData.diffWidth/2, Math.min(pinchData.diffWidth/2, pinchData.centerLeft));
 								pinchData.overZoom = true;
 							} else {
-								pinchData.marginLeft = 0;
+								pinchData.centerLeft = 0;
 							}
-							$('#swipebox-slider .current img').css({'margin-top':pinchData.marginTop+'px', 'margin-left':pinchData.marginLeft+'px'});
+							$('#swipebox-slider .current img').css({'top':pinchData.centerTop+'px', 'left':pinchData.centerLeft+'px'});
 							if (nowDiffHeight === pinchData.diffHeight && nowDiffWidth === pinchData.diffWidth) {
 								pinchData.lastZoom = nowZoom;
 								pinchData.diffHeight = nowDiffHeight;
@@ -390,15 +389,13 @@
 						} else if (pinchData.overZoom) {
 							// let's move the image
 							
-							pinchData.lastMarginTop = pinchData.marginTop + endCoords.pageY - startCoords.pageY;
-							pinchData.lastMarginTop = Math.min(0, pinchData.lastMarginTop);
-							pinchData.lastMarginTop = Math.max(-pinchData.diffHeight, pinchData.lastMarginTop);
+							pinchData.lastCenterTop = pinchData.centerTop + endCoords.pageY - startCoords.pageY;
+							pinchData.lastCenterTop = Math.max(-pinchData.diffHeight/2, Math.min(pinchData.diffHeight/2, pinchData.lastCenterTop));
 							
-							pinchData.lastMarginLeft = pinchData.marginLeft + endCoords.pageX - startCoords.pageX;
-							pinchData.lastMarginLeft = Math.min(0, pinchData.lastMarginLeft);
-							pinchData.lastMarginLeft = Math.max(-pinchData.diffWidth, pinchData.lastMarginLeft);
+							pinchData.lastCenterLeft = pinchData.centerLeft + endCoords.pageX - startCoords.pageX;
+							pinchData.lastCenterLeft = Math.max(-pinchData.diffWidth/2, Math.min(pinchData.diffWidth/2, pinchData.lastCenterLeft));
 							
-							$('#swipebox-slider .current img').css({'margin-top':pinchData.lastMarginTop+'px', 'margin-left':pinchData.lastMarginLeft+'px'});
+							$('#swipebox-slider .current img').css({'top':pinchData.lastCenterTop+'px', 'left':pinchData.lastCenterLeft+'px'});
 							
 							return;
 						}
@@ -474,8 +471,8 @@
 
 					// C.C. begin
 					if (!pinchData.inProgress && pinchData.overZoom) {
-						pinchData.marginTop = pinchData.lastMarginTop;
-						pinchData.marginLeft = pinchData.lastMarginLeft;
+						pinchData.centerTop = pinchData.lastCenterTop;
+						pinchData.centerLeft = pinchData.lastCenterLeft;
 					}
 					if (pinchData.inProgress || pinchData.overZoom) {
 						$( '.touching' ).off( 'touchmove' ).removeClass( 'touching' );
@@ -514,10 +511,10 @@
 						if( hDistance >= hSwipMinDistance && hDistance >= hDistanceLast) {
 
 							// C.C. begin
-							if (pinchData.lastZoom > 100) {
+							if (pinchData.lastZoom > 1) {
 								// let's reset css props before swiping
-								$('#swipebox-slider .current img').css({'max-width':'100%', 'max-height':'100%', 'margin-top':'','margin-left':''});
-								pinchData.lastZoom = 100;
+								$('#swipebox-slider .current img').css({'transform':'', '-webkit-transform':'', 'top':'', 'left':''});
+								pinchData.lastZoom = 1;
 							}
 							// C.C. end
 							$this.getPrev();
@@ -526,10 +523,10 @@
 						} else if ( hDistance <= -hSwipMinDistance && hDistance <= hDistanceLast) {
 
 							// C.C. begin
-							if (pinchData.lastZoom > 100) {
+							if (pinchData.lastZoom > 1) {
 								// let's reset css props before swiping
-								$('#swipebox-slider .current img').css({'max-width':'100%', 'max-height':'100%', 'margin-top':'','margin-left':''});
-								pinchData.lastZoom = 100;
+								$('#swipebox-slider .current img').css({'transform':'', '-webkit-transform':'', 'top':'', 'left':''});
+								pinchData.lastZoom = 1;
 							}
 							// C.C. end
 							$this.getNext();
