@@ -10,31 +10,6 @@ module.exports = function(grunt) {
 		version: grunt.file.readJSON('package.json').version,
 		pkg: grunt.file.readJSON('package.json'),
 
-		// notify cross-OS - see https://github.com/dylang/grunt-notify
-		notify: {
-			
-			scss: {
-				options: {
-					title: 'SCSS compiled',
-					message: 'CSS is in the hood'
-				}
-			},
-
-			js: {
-				options: {
-					title: 'JS checked and minified',
-					message: 'JS is all good'
-				}
-			},
-
-			dist: {
-				options: {
-					title: 'Project Compiled',
-					message: 'All good'
-				}
-			}
-		},
-
 		// compile scss
 		sass: {
 
@@ -110,8 +85,7 @@ module.exports = function(grunt) {
 				files: [ '../src/js/*.js' ],
 				tasks: [
 					'jshint',
-					'uglify',
-					'notify:js'
+					'uglify'
 				],
 			},
 			scss: {
@@ -120,8 +94,7 @@ module.exports = function(grunt) {
 				tasks: [
 					'sass',
 					'autoprefixer',
-					'cssmin',
-					'notify:scss'
+					'cssmin'
 				],
 			},
 
@@ -146,9 +119,7 @@ module.exports = function(grunt) {
 		'autoprefixer',
 		'cssmin',
 		'jshint',
-		'uglify',
-		'sass:demo',
-		'notify:dist'
+		'uglify'
 	] );
 
 	/**
@@ -163,7 +134,6 @@ module.exports = function(grunt) {
 		'cssmin',
 		'jshint',
 		'uglify',
-		'sass:demo',
 		'watch'
 	] );
 };
