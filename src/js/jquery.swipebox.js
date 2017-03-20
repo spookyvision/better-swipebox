@@ -6,6 +6,8 @@
  * C.C. begin
  * ...
  * C.C. end
+ * 
+ * added jquery 3 support from https://github.com/andrews05/swipebox/commit/56840634b5887b88cb60f90949d34ec13b0936ab
  */
 ;( function ( window, document, $, undefined ) {
 
@@ -31,7 +33,8 @@
 				loopAtEnd: false,
 				autoplayVideos: false,
 				queryStringData: {},
-				toggleClassOnLoad: ''
+				toggleClassOnLoad: '',
+				selector: null
 			},
 
 			plugin = this,
@@ -83,7 +86,7 @@
 
 			} else {
 
-				$( document ).on( 'click', selector, function( event ) {
+				$( elem ).on( 'click', plugin.settings.selector, function( event ) {
 
 					// console.log( isTouch );
 
@@ -92,12 +95,13 @@
 						return false;
 					}
 
-					if ( ! $.isArray( elem ) ) {
-						ui.destroy();
-						$elem = $( selector );
-						ui.actions();
+					ui.destroy();
+					if ( plugin.settings.selector === null ) {
+						$elem = $( elem );
+					} else {
+						$elem = $( elem ).find( plugin.settings.selector );
 					}
-
+					
 					elements = [];
 					var index, relType, relVal;
 
@@ -113,9 +117,7 @@
 					}
 
 					if ( relVal && relVal !== '' && relVal !== 'nofollow' ) {
-						$elem = $( selector ).filter( '[' + relType + '="' + relVal + '"]' );
-					} else {
-						$elem = $( selector );
+						$elem = $elem.filter( '[' + relType + '="' + relVal + '"]' );
 					}
 
 					$elem.each( function() {
