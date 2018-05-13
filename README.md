@@ -5,11 +5,11 @@ A touchable jQuery lightbox.
 
 [View project page](https://marian-kadanka.github.io/better-swipebox/)
 
-##What is Better Swipebox?
+## What is Better Swipebox?
 
 Better Swipebox is a fork of famous jQuery "lightbox" plugin [Swipebox](https://github.com/brutaldesign/swipebox) for desktop, mobile and tablet.
 
-##Original Swipebox Features
+## Original Swipebox Features
 
 - Swipe gestures for mobile
 - Keyboard Navigation for desktop
@@ -18,19 +18,19 @@ Better Swipebox is a fork of famous jQuery "lightbox" plugin [Swipebox](https://
 - Easy CSS customization
 - Video, Images and Inline content
 
-##Better Swipebox Additions
+## Better Swipebox Additions
 
 - Pinch zoom on mobile
 - Back button closes Swipebox
 - Clicking on the background closes Swipebox, clicking on the image loads next one
 
-###Compatibility
+### Compatibility
 
 Chrome, Safari, Firefox, Opera, IE9+, IOS4+, Android, windows phone.
 
-##Usage
+## Usage
 
-###Javascript
+### Javascript
 
 Include jquery and the swipebox script in your head tags or right before your body closing tag.
 
@@ -39,7 +39,7 @@ Include jquery and the swipebox script in your head tags or right before your bo
 <script src="src/js/jquery.swipebox.js"></script>
 ```
 
-###CSS
+### CSS
 
 Include the swipebox CSS style in your head tags.
 
@@ -47,7 +47,7 @@ Include the swipebox CSS style in your head tags.
 <link rel="stylesheet" href="src/css/swipebox.css">
 ```
 
-###HTML
+### HTML
 
 Use a specific class for your links and use the title attribute as caption.
 
@@ -55,7 +55,7 @@ Use a specific class for your links and use the title attribute as caption.
 <a href="big/image.jpg" class="swipebox" title="My Caption">
 ```
 
-###Fire the plugin
+### Fire the plugin
 
 Bind the swipebox behaviour on every link with the "swipebox" class.
 
@@ -63,7 +63,7 @@ Bind the swipebox behaviour on every link with the "swipebox" class.
 $( '.swipebox' ).swipebox();
 ```
 
-###Options
+### Options
 
 ```javascript
 useCSS : true, // false will force the use of jQuery for animations
